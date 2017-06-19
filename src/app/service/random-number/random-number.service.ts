@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 @Injectable()
 export class RandomNumberService {
@@ -13,5 +14,18 @@ export class RandomNumberService {
 
     publishRandomNumber(): void {
 
+    }
+
+    publishEmulatedRandomness(): void {
+        const timer = TimerObservable.create(0, 2000);
+
+        timer.subscribe((number) => {
+            if (number < 10) {
+                this.sequentialNumberSubject.next(number);
+            }
+            else {
+                this.sequentialNumberSubject.next(null);
+            }
+        });
     }
 }
