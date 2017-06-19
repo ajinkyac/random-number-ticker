@@ -1,6 +1,12 @@
+/*
+Original odometer by Lenny Sirivong:
+https://codepen.io/lsirivong/pen/tgfjo
+*/
+
 // For a large application, these imports should be at a common app level sass file.
 @import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
 @import './../styles/variables';
+@import './../styles/placeholders';
 @import './../styles/mixins';
 
 * {
@@ -10,7 +16,27 @@
 
 .ticker-body {
     .ticker-screen {
+        @include ticker-base(2px);
+        @include text-shadow(0 3px $black);
+        @extend %ticker-screen-base;
+
+        background: $dark-grey;
+        color: $white;
+        margin: .55em .55em .65em;
+        position: relative;
+        z-index: 1;
+
         .digit-container {
+            @extend %digit-container-base;
+            border-right: 5px solid $black;
+
+            .digit {
+                @extend %digit-base;
+            }
+
+            &:last-child {
+                border-right: none;
+            }
         }
     }
 }
