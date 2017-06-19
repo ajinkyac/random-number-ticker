@@ -1,2 +1,16 @@
+// For a large application, these imports should be at a common app level sass file.
+@import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
 @import './../styles/variables';
 @import './../styles/mixins';
+
+* {
+    font-family: $body-font;
+    font-size: 4rem;
+}
+
+.ticker-body {
+    .ticker-screen {
+        .digit-container {
+        }
+    }
+}
