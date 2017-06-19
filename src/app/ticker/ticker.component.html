@@ -7,3 +7,11 @@
         </div>
     </div>
 </div>
+
+<div class="ticker-body" *ngIf="randomNumbers?.length">
+    <div class="ticker-screen">
+        <div class="digit-container" *ngFor="let number of randomNumbers">
+            <div class="digit" [attr.data-number]="number">0 9 8 7 6 5 4 3 2 1 0</div>
+        </div>
+    </div>
+</div>
