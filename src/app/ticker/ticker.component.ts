@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { RandomNumberService } from './../service/random-number/random-number.service';
 
 @Component({
     selector: 'app-ticker',
@@ -7,8 +8,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class TickerComponent implements OnInit, OnDestroy {
     private keepSubscriptionAlive = true;
+    public randomNumbers: number[];
 
-    constructor() { }
+    constructor(private randomNumberService: RandomNumberService) { }
 
     ngOnInit() {
     }
