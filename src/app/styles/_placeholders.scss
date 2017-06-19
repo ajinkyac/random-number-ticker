@@ -7,7 +7,34 @@
     z-index: 10;
 }
 
+%digit-base {
+    @include transition(transform .3s ease);
+    @include transform2d(translate(0, 0));
+
+    @for $i from 0 through 9 {
+        &[data-number="#{$i}"] {
+            @include transform2d(translate(0, ($i * 1em) - 10em));
+        }
+    }
+
+    line-height: 1em;
+    position: relative;
+}
+
+%digit-container-base {
+    display: inline-block;
+    height: 1em;
+    overflow: hidden;
+    padding: 0 0.2em;
+    width: 0.59em;
+}
+
 %pseudo-base {
     content: '';
     position: absolute;
+}
+
+%ticker-shape-base {
+    @include box-shadow(0 0 0 5px $black);
+    @include inline-block;
 }
