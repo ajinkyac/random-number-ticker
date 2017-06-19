@@ -1,2 +1,13 @@
 @import '~compass-mixins/lib/compass/css3';
 @import 'variables';
+
+%ticker-screen-base {
+    height: 1em;
+    overflow: hidden;
+    z-index: 10;
+}
+
+%pseudo-base {
+    content: '';
+    position: absolute;
+}
