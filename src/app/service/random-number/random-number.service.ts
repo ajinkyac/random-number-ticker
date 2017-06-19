@@ -14,7 +14,7 @@ export class RandomNumberService {
     public uniqueRandomNumberSubject: Subject<string[]> = new Subject<string[]>();
     public sequentialNumberSubject: Subject<number> = new Subject<number>();
 
-    constructor() {
+    constructor(private helper: Helper) {
         this.publishRandomNumber();
     }
 
@@ -23,14 +23,29 @@ export class RandomNumberService {
      * Maintain a string of the random numbers for uniqueness (less expensive than array operation).
      */
     getAndStoreRandomNumbers(): void {
+        const interval = setInterval(() => {
+            const randomNumber: number = this.helper.getRandomNumber(RandomNumberService.RANDOM_FN_MIN,
+                                                           RandomNumberService.RANDOM_FN_MAX);
 
+            // Keeping numbers in a string is not that expensive and ensures uniqueness.
+            if (this.randomNumbers.indexOf(randomNumber.toString()) === -1) {
+                this.randomNumbers += randomNumber + ',';
+                this.randomNumberBuffer.push(randomNumber);
+                this.reset++;
+            }
+
+            if (this.reset === RandomNumberService.RANDOM_FN_MAX) {
+                // Once the interval is reset, again a '?' will appear on the screen.
+                clearInterval(interval);
+            }
+        }, 1000);
     }
 
     publishRandomNumber(): void {
         this.getAndStoreRandomNumbers();
 
         setInterval(() => {
-            const number: string[] = [''];
+            const number: string[] = this.randomNumberBuffer.length ? this.randomNumberBuffer.pop().toString().split('') : ['0'];
             this.uniqueRandomNumberSubject.next(number);
         }, 2000);
     }
