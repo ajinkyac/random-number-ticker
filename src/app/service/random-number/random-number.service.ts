@@ -18,7 +18,17 @@ export class RandomNumberService {
         this.publishRandomNumber();
     }
 
+    /**
+     * Stores random numbers in an array that keeps on empting.
+     * Maintain a string of the random numbers for uniqueness (less expensive than array operation).
+     */
+    getAndStoreRandomNumbers(): void {
+
+    }
+
     publishRandomNumber(): void {
+        this.getAndStoreRandomNumbers();
+
         setInterval(() => {
             const number: string[] = [''];
             this.uniqueRandomNumberSubject.next(number);
