@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { TickerComponent } from './ticker/ticker.component';
+import { Helper } from './shared/utils/helper';
 import { RandomNumberService } from './service/random-number/random-number.service';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { RandomNumberService } from './service/random-number/random-number.servi
         HttpModule
     ],
     providers: [
+        Helper,
         RandomNumberService
     ],
     bootstrap: [ AppComponent ]
