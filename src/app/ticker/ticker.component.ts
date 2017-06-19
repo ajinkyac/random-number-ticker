@@ -13,6 +13,11 @@ export class TickerComponent implements OnInit, OnDestroy {
     constructor(private randomNumberService: RandomNumberService) { }
 
     ngOnInit() {
+        this.randomNumberService.uniqueRandomNumberSubject
+                                .takeWhile(() => this.keepSubscriptionAlive)
+                                .subscribe((number) => {
+                                    this.randomNumbers = number;
+                                });
     }
 
     ngOnDestroy(): void {
