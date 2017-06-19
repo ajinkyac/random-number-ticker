@@ -1,0 +1,20 @@
+// This is used to make the fancy lines in the corners
+@mixin ticker-corner($side-v: top, $side-h: left, $offset: 5px, $height: 25px, $width: 15px, $color: $black, $pseudo: after, $size: 5px) {
+    &:#{$pseudo} {
+        @include border-corner-radius($side-v, $side-h, 8px);
+        @extend %pseudo-base;
+        #{$side-h}: $offset;
+        #{$side-v}: $offset;
+        border-#{$side-h}: $size solid $color;
+        border-#{$side-v}: $size solid $color;
+        height: $height;
+        width: $width;
+        z-index: 3;
+    }
+}
+
+// Creates the basic shape for the ticker
+@mixin ticker-base($radius) {
+    @include border-radius($radius);
+    @extend %ticker-shape-base;
+}
