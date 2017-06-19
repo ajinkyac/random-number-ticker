@@ -8,7 +8,7 @@ import { RandomNumberService } from './../service/random-number/random-number.se
 })
 export class TickerComponent implements OnInit, OnDestroy {
     private keepSubscriptionAlive = true;
-    public randomNumbers: number[];
+    public randomNumbers: string[];
 
     constructor(private randomNumberService: RandomNumberService) { }
 

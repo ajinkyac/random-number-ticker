@@ -1,19 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { Helper } from '../../shared/utils/helper';
 
 @Injectable()
 export class RandomNumberService {
     private static readonly RANDOM_FN_MIN = 1;
     private static readonly RANDOM_FN_MAX = 15000;
+    private randomNumbers = '';
+    private randomNumberBuffer: number[] = [];
+    private reset = 0;
 
-    public uniqueRandomNumberSubject: Subject<number[]> = new Subject<number[]>();
+    public uniqueRandomNumberSubject: Subject<string[]> = new Subject<string[]>();
     public sequentialNumberSubject: Subject<number> = new Subject<number>();
 
-    constructor() { }
+    constructor() {
+        this.publishRandomNumber();
+    }
 
     publishRandomNumber(): void {
-
+        setInterval(() => {
+            const number: string[] = [''];
+            this.uniqueRandomNumberSubject.next(number);
+        }, 2000);
     }
 
     /**
