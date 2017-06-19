@@ -5,18 +5,23 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { TickerComponent } from './ticker/ticker.component';
+import { RandomNumberService } from './service/random-number/random-number.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TickerComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        TickerComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule
+    ],
+    providers: [
+        RandomNumberService
+    ],
+    bootstrap: [ AppComponent ]
 })
 export class AppModule { }
+
+// No AppRoutes included as there is no routing involved.
