@@ -5,6 +5,7 @@ import { Helper } from '../../shared/utils/helper';
 
 @Injectable()
 export class RandomNumberService {
+    private static readonly RANDOM_FN_LIMIT = 3;
     private static readonly RANDOM_FN_MIN = 1;
     private static readonly RANDOM_FN_MAX = 15000;
     private randomNumbers = '';
@@ -23,30 +24,44 @@ export class RandomNumberService {
      * Maintain a string of the random numbers for uniqueness (less expensive than array operation).
      */
     getAndStoreRandomNumbers(): void {
+        const ranges: string[] = this.helper.getRandomNumberGeneratorRanges(RandomNumberService.RANDOM_FN_LIMIT, RandomNumberService.RANDOM_FN_MAX);
+
         const interval = setInterval(() => {
-            const randomNumber: number = this.helper.getRandomNumber(RandomNumberService.RANDOM_FN_MIN,
-                                                           RandomNumberService.RANDOM_FN_MAX);
+            let range: string[] = [];
 
-            // Keeping numbers in a string is not that expensive and ensures uniqueness.
-            if (this.randomNumbers.indexOf(randomNumber.toString()) === -1) {
-                this.randomNumbers += randomNumber + ',';
-                this.randomNumberBuffer.push(randomNumber);
-                this.reset++;
+            // Once the interval is reset, again a '?' will appear on the screen.
+            if (!ranges.length) {
+                clearInterval(interval)
             }
+            else {
+                range = ranges.shift().split('-');
 
-            if (this.reset === RandomNumberService.RANDOM_FN_MAX) {
-                // Once the interval is reset, again a '?' will appear on the screen.
-                clearInterval(interval);
+                let min = parseInt(range[0]),
+                    max = parseInt(range[1]);
+
+                // The limit of 500 can be increased to any number of numbers between a given range i.e. the diff of max and min.
+                const randomNumber: number[] = this.helper.getRandomNumbersBetween(min, max, 5000);
+                this.randomNumbers += randomNumber + ',';
+                this.randomNumberBuffer = this.randomNumberBuffer.concat(randomNumber);
+                this.reset++;
             }
         }, 1000);
     }
 
+    /**
+     * Publish latest unique random number.
+     */
     publishRandomNumber(): void {
         this.getAndStoreRandomNumbers();
 
-        setInterval(() => {
-            const number: string[] = this.randomNumberBuffer.length ? this.randomNumberBuffer.pop().toString().split('') : ['0'];
-            this.uniqueRandomNumberSubject.next(number);
+        const interval = setInterval(() => {
+            const number: string[] = this.randomNumberBuffer.length ? this.randomNumberBuffer.pop().toString().split('') : null;
+            if (number !== null) {
+                this.uniqueRandomNumberSubject.next(number);
+            }
+            else {
+                clearInterval(interval);
+            }
         }, 2000);
     }
 
