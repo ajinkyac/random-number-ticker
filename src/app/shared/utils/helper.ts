@@ -23,16 +23,15 @@ export class Helper {
      * @return {string[]} - Array of intervals.
      */
     getRandomNumberGeneratorRanges(rangeLength: number, max: number): string[] {
-        const ranges: string[] = [];
-        let eachRangeLength = max / rangeLength;
+        const ranges: string[] = [],
+              eachRangeLength = max / rangeLength;
 
         for (let i = 1; i <= rangeLength; i++) {
             let rangeStr = '';
 
             if (i === 1) {
                 rangeStr += i + '-' + eachRangeLength;
-            }
-            else {
+            } else {
                 rangeStr += ((i - 1) * eachRangeLength + 1) + '-' + (i * eachRangeLength);
             }
             ranges.push(rangeStr);
@@ -51,9 +50,9 @@ export class Helper {
      * @return {number} - A random number.
      */
     getRandomNumbersBetween(min: number, max: number, limit: number): number[] {
-        let randomNumbers: number[] = [];
+        const randomNumbers: number[] = [];
 
-        while(randomNumbers.length < limit) {
+        while (randomNumbers.length < limit) {
             const number = this.getRandomNumber(min, max);
 
             // Lodash/underscore could be used for such ops.
